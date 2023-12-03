@@ -1,0 +1,58 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Match Details</title>
+    <script>
+        function showPlayers() {
+            document.getElementById('playerForm').style.display = 'block';
+        }
+        function showActions() {
+            document.getElementById('actionForm').style.display = 'block';
+        }
+    </script>
+</head>
+<body>
+    <h1>Enter Match Details</h1>
+    <form id="matchForm" action="/submit_match_details" method="post">
+        <label for="matchType">Match Type:</label>
+        <input type="text" id="matchType" name="matchType"><br><br>
+
+        <label for="rival">Rival:</label>
+        <input type="text" id="rival" name="rival"><br><br>
+
+        <label for="matchDate">Match Date:</label>
+        <input type="text" id="matchDate" name="matchDate"><br><br>
+
+        <input type="button" value="Next" onclick="showPlayers()">
+    </form>
+
+    <div id="playerForm" style="display: none;">
+        <h1>Enter Players</h1>
+        <form action="/submit_players" method="post">
+            <label for="players">Enter 10 players (comma-separated):</label>
+            <input type="text" id="players" name="players"><br><br>
+            <input type="button" value="Next" onclick="showActions()">
+        </form>
+    </div>
+
+    <div id="actionForm" style="display: none;">
+        <h1>Enter Actions</h1>
+        <form action="/submit_actions" method="post">
+            {% for player in players %}
+            <h2>Actions for {{ player }}</h2>
+            <div>
+                <label for="minute_{{ loop.index }}">Minute:</label>
+                <input type="text" id="minute_{{ loop.index }}" name="actions[]" placeholder="Minute">
+                <label for="type_{{ loop.index }}">Type:</label>
+                <input type="text" id="type_{{ loop.index }}" name="actions[]" placeholder="Type">
+                <label for="participants_{{ loop.index }}">Participants:</label>
+                <input type="text" id="participants_{{ loop.index }}" name="actions[]" placeholder="Participants">
+            </div>
+            {% endfor %}
+            <br><br>
+            <input type="submit" value="Submit Actions">
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  flask_api_1:
+    build: ./flask_api_1
+    container_name: flask_api_1
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongodb
+
+  flask_api_2:
+    build: ./flask_api_2
+    container_name: flask_api_2
+    ports:
+      - "5001:5000"
+    depends_on:
+      - mongodb
+
+volumes:
+  mongodb_data:
+    driver: local

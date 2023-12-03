@@ -1,0 +1,25 @@
+<!-- templates/actions.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Enter Actions</title>
+</head>
+<body>
+    <h1>Enter Actions</h1>
+    <form action="/submit_actions" method="post">
+        {% for player in players %}
+        <h2>Actions for {{ player }}</h2>
+        <div>
+            <label for="minute_{{ loop.index }}">Minute:</label>
+            <input type="text" id="minute_{{ loop.index }}" name="actions[]" placeholder="Minute">
+            <label for="type_{{ loop.index }}">Type:</label>
+            <input type="text" id="type_{{ loop.index }}" name="actions[]" placeholder="Type">
+            <label for="participants_{{ loop.index }}">Participants:</label>
+            <input type="text" id="participants_{{ loop.index }}" name="actions[]" placeholder="Participants">
+        </div>
+        {% endfor %}
+        <br><br>
+        <input type="submit" value="Submit Actions">
+    </form>
+</body>
+</html>
