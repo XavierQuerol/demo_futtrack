@@ -1,25 +1,90 @@
-<!-- templates/actions.html -->
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Enter Actions</title>
+    <title>Actions</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom CSS styles, if needed */
+    </style>
 </head>
 <body>
-    <h1>Enter Actions</h1>
-    <form action="/submit_actions" method="post">
-        {% for player in players %}
-        <h2>Actions for {{ player }}</h2>
-        <div>
-            <label for="minute_{{ loop.index }}">Minute:</label>
-            <input type="text" id="minute_{{ loop.index }}" name="actions[]" placeholder="Minute">
-            <label for="type_{{ loop.index }}">Type:</label>
-            <input type="text" id="type_{{ loop.index }}" name="actions[]" placeholder="Type">
-            <label for="participants_{{ loop.index }}">Participants:</label>
-            <input type="text" id="participants_{{ loop.index }}" name="actions[]" placeholder="Participants">
-        </div>
-        {% endfor %}
-        <br><br>
-        <input type="submit" value="Submit Actions">
-    </form>
+    <div class="container">
+        <h1>Enter Actions</h1>
+        <form method="POST" id="actions-form">
+            {{ form.csrf_token }}
+            <div class="form-group">
+                {{ form.action_type.label(class="form-control-label") }}
+                {{ form.action_type(id="action-type", class="form-control", onchange="toggleFields()") }}
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="minute">Minute</label>
+                    <select id="minute" class="form-control" name="minute">
+                        {% for i in range(0, 21) %}
+                            <option value="{{ i }}">{{ '%02d'|format(i) }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="second">Second</label>
+                    <select id="second" class="form-control" name="second">
+                        {% for i in range(0, 60) %}
+                            <option value="{{ i }}">{{ '%02d'|format(i) }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div id="goal-fields" style="display: none;">
+                <div class="form-group">
+                    {{ form.scorer.label(class="form-control-label") }}
+                    {{ form.scorer(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.assistant.label(class="form-control-label") }}
+                    {{ form.assistant(class="form-control") }}
+                </div>
+            </div>
+
+            <div id="rival-goal-fields" style="display: none;">
+                <!-- Fields for rival goal -->
+            </div>
+
+            <div id="player-change-fields" style="display: none;">
+                <div class="form-group">
+                    {{ form.entra.label(class="form-control-label") }}
+                    {{ form.entra(class="form-control", multiple="multiple") }}
+                </div>
+                <div class="form-group">
+                    {{ form.surt.label(class="form-control-label") }}
+                    {{ form.surt(class="form-control", multiple="multiple") }}
+                </div>
+            </div>
+            
+            {{ form.submit_action(class="btn btn-primary") }}
+            {{ form.final_part(class="btn btn-primary") }}
+        </form>
+    </div>
+
+    <script>
+        function toggleFields() {
+            var selectedAction = document.getElementById('action-type').value;
+
+            document.getElementById('goal-fields').style.display = 'none';
+            document.getElementById('rival-goal-fields').style.display = 'none';
+            document.getElementById('player-change-fields').style.display = 'none';
+
+            if (selectedAction === 'goal') {
+                document.getElementById('goal-fields').style.display = 'block';
+            } else if (selectedAction === 'rival_goal') {
+                document.getElementById('rival-goal-fields').style.display = 'block';
+            } else if (selectedAction === 'player_change') {
+                document.getElementById('player-change-fields').style.display = 'block';
+            }
+        }
+    </script>
 </body>
 </html>
+
+
+

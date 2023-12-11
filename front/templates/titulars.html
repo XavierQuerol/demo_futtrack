@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Titulars</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Enter titulars</h1>
+        <form method="POST">
+            {{ form.csrf_token }}
+            <div class="form-group">
+                {{ form.players.label(class="form-control-label") }}
+                {{ form.players(class="form-control", multiple="multiple") }}
+            </div>
+            {{ form.next_step(class="btn btn-primary") }}
+        </form>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
