@@ -50,7 +50,7 @@
                 <!-- Fields for rival goal -->
             </div>
 
-            <div id="player-change-fields" style="display: none;">
+            <div id="canvi-fields" style="display: none;">
                 <div class="form-group">
                     {{ form.entra.label(class="form-control-label") }}
                     {{ form.entra(class="form-control", multiple="multiple") }}
@@ -69,17 +69,18 @@
     <script>
         function toggleFields() {
             var selectedAction = document.getElementById('action-type').value;
+            console.log(selectedAction);
 
             document.getElementById('goal-fields').style.display = 'none';
             document.getElementById('rival-goal-fields').style.display = 'none';
-            document.getElementById('player-change-fields').style.display = 'none';
+            document.getElementById('canvi-fields').style.display = 'none';
 
             if (selectedAction === 'goal') {
                 document.getElementById('goal-fields').style.display = 'block';
             } else if (selectedAction === 'rival_goal') {
                 document.getElementById('rival-goal-fields').style.display = 'block';
-            } else if (selectedAction === 'player_change') {
-                document.getElementById('player-change-fields').style.display = 'block';
+            } else if (selectedAction === 'canvi') {
+                document.getElementById('canvi-fields').style.display = 'block';
             }
         }
     </script>
